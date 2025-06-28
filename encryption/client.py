@@ -98,7 +98,7 @@ class ClientApp:
         self.fig.tight_layout()
         self.canvas.draw()
         
-    def send_data_to_server(self, host='localhost', port=65432):
+    def send_data_to_server(self, host='26.14.40.24', port=65432):
         if not self.encoded_levels:
             messagebox.showerror("Erro", "Primeiro processe os dados localmente para gerar a lista.")
             return
