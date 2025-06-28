@@ -43,7 +43,7 @@ def plot_levels_tk(root, ax, canvas, app_widgets):
                     app_widgets['enc_box'].delete(1.0, tk.END)
                     app_widgets['enc_box'].insert(tk.END, str(debin))
                     if password:
-                        dec = decryptMessageFromStr(str(debin), password)
+                        dec = decryptMessageFromStr(debin, password)
                         app_widgets['dec_box'].delete(1.0, tk.END)
                         app_widgets['dec_box'].insert(tk.END, dec.decode('utf-8'))
                     else:
@@ -59,7 +59,7 @@ def plot_levels_tk(root, ax, canvas, app_widgets):
 
 def handle_client(conn, addr):
     with conn:
-        print(f"🔌 Conectado por {addr}")
+        print(f" Conectado por {addr}")
         data_received = conn.recv(4096)
         if not data_received:
             return
