@@ -40,6 +40,8 @@ def lineEncode(message: str):
             case _:
                 raise ValueError("Invalid bit value")
             
+    return levels
+            
 def lineDecode(levels: list[int]):
 
     message = ""
