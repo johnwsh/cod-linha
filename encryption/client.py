@@ -116,8 +116,18 @@ class ClientApp:
                 print(f"📡 Tentando conectar a {host}:{port}...")
                 s.connect((host, port))
                 s.sendall(json_data)
-                print("✅ Dados enviados com sucesso!")
-                messagebox.showinfo("Sucesso", "Dados enviados para o servidor com sucesso!")
+                # Aguarda resposta do servidor
+                response_data = s.recv(4096)
+                if response_data:
+                    response = json.loads(response_data.decode('utf-8'))
+                    msg = response.get('msg', 'Sem mensagem')
+                    status = response.get('status', 'Sem status')
+                    qtd = response.get('qtd_niveis', None)
+                    info = f"Status: {status}\nMensagem do servidor: {msg}"
+                    if qtd is not None:
+                        info += f"\nQuantidade de níveis recebidos: {qtd}"
+                    messagebox.showinfo("Resposta do Servidor", info)
+                print("✅ Dados enviados e resposta recebida!")
         except ConnectionRefusedError:
             messagebox.showerror("Erro de Conexão", f"Não foi possível conectar ao servidor em {host}:{port}. O servidor está em execução?")
         except Exception as e:
