@@ -10,7 +10,7 @@ from tkinter import LabelFrame, BOTH
 from tkinter import Entry, scrolledtext, Label, Button, X, W
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from encryption.criptAndBinary import decryptMessageFromStr, debinarize
+from encryption.criptAndBinary import decryptMessageToStr, debinarize
 from encryption.twoboneq import lineDecode
 
 # Fila para comunicação entre threads
@@ -43,7 +43,7 @@ def plot_levels_tk(root, ax, canvas, app_widgets):
                     app_widgets['enc_box'].delete(1.0, tk.END)
                     app_widgets['enc_box'].insert(tk.END, str(debin))
                     if password:
-                        dec = decryptMessageFromStr(debin, password)
+                        dec = decryptMessageToStr(debin, password)
                         app_widgets['dec_box'].delete(1.0, tk.END)
                         app_widgets['dec_box'].insert(tk.END, dec.decode('utf-8'))
                     else:
@@ -66,7 +66,7 @@ def handle_client(conn, addr):
         try:
             payload = json.loads(data_received.decode('utf-8'))
             levels_list = payload['levels']
-            print("\n--- 📊 DADOS RECEBIDOS ---")
+            print("\n--- DADOS RECEBIDOS ---")
             print(f"Lista de Níveis: {levels_list}")
             # Coloca os níveis na fila para a interface
             levels_queue.put(levels_list)
@@ -127,7 +127,7 @@ def start_server(host='localhost', port=65432):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind((host, port))
             s.listen()
-            print(f"✅ Servidor escutando em {host}:{port}")
+            print(f" Servidor escutando em {host}:{port}")
             while True:
                 conn, addr = s.accept()
                 threading.Thread(target=handle_client, args=(conn, addr), daemon=True).start()
