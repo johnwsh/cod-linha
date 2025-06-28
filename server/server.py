@@ -66,7 +66,7 @@ def handle_client(conn, addr):
         try:
             payload = json.loads(data_received.decode('utf-8'))
             levels_list = payload['levels']
-            print("\n--- 📊 DADOS RECEBIDOS ---")
+            print("\n--- DADOS RECEBIDOS ---")
             print(f"Lista de Níveis: {levels_list}")
             # Coloca os níveis na fila para a interface
             levels_queue.put(levels_list)
@@ -127,7 +127,7 @@ def start_server(host='localhost', port=65432):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind((host, port))
             s.listen()
-            print(f"✅ Servidor escutando em {host}:{port}")
+            print(f" Servidor escutando em {host}:{port}")
             while True:
                 conn, addr = s.accept()
                 threading.Thread(target=handle_client, args=(conn, addr), daemon=True).start()

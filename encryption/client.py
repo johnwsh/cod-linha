@@ -111,7 +111,7 @@ class ClientApp:
 
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                print(f"📡 Tentando conectar a {host}:{port}...")
+                print(f" Tentando conectar a {host}:{port}...")
                 s.connect((host, port))
                 s.sendall(json_data)
                 # Aguarda resposta do servidor
@@ -125,7 +125,7 @@ class ClientApp:
                     if qtd is not None:
                         info += f"\nQuantidade de níveis recebidos: {qtd}"
                     messagebox.showinfo("Resposta do Servidor", info)
-                print("✅ Dados enviados e resposta recebida!")
+                print(" Dados enviados e resposta recebida!")
         except ConnectionRefusedError:
             messagebox.showerror("Erro de Conexão", f"Não foi possível conectar ao servidor em {host}:{port}. O servidor está em execução?")
         except Exception as e:
