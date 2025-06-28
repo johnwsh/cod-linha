@@ -10,7 +10,7 @@ from tkinter import LabelFrame, BOTH
 from tkinter import Entry, scrolledtext, Label, Button, X, W
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from encryption.criptAndBinary import decryptMessageFromStr, debinarize
+from encryption.criptAndBinary import decryptMessageToStr, debinarize
 from encryption.twoboneq import lineDecode
 
 # Fila para comunicação entre threads
@@ -43,7 +43,7 @@ def plot_levels_tk(root, ax, canvas, app_widgets):
                     app_widgets['enc_box'].delete(1.0, tk.END)
                     app_widgets['enc_box'].insert(tk.END, str(debin))
                     if password:
-                        dec = decryptMessageFromStr(str(debin), password)
+                        dec = decryptMessageToStr(debin, password)
                         app_widgets['dec_box'].delete(1.0, tk.END)
                         app_widgets['dec_box'].insert(tk.END, dec.decode('utf-8'))
                     else:

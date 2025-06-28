@@ -52,5 +52,5 @@ def encryptMessageFromStr(message: str, password: str):
 
 def decryptMessageToStr(token: bytes, password: str):
     decrypted = decryptMessage(token, password.encode('utf-8'))
-    return decrypted.decode('utf-8')
+    return decrypted
 
