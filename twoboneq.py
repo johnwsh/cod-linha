@@ -4,7 +4,7 @@ def lineEncode(message: str):
 
     positive = True
 
-    for i in range(0, int(len(message)/2), 2):
+    for i in range(0, int(len(message)-1), 2):
 
         nextBits = message[i:i+2]
 
@@ -40,6 +40,8 @@ def lineEncode(message: str):
             case _:
                 raise ValueError("Invalid bit value")
             
+    return levels
+            
 def lineDecode(levels: list[int]):
 
     message = ""
@@ -51,31 +53,27 @@ def lineDecode(levels: list[int]):
         if level == 1:
             if positive:
                 message += "00"
-                positive = True
             else:
                 message += "10"
-                positive = False
+            positive = True
         elif level == -1:
             if positive:
                 message += "10"
-                positive = False
             else:
                 message += "00"
-                positive = True
+            positive = False
         elif level == 3:
             if positive:
                 message += "01"
-                positive = True
             else:
                 message += "11"
-                positive = False
+            positive = True
         elif level == -3:
             if positive:
                 message += "11"
-                positive = False
             else:
                 message += "01"
-                positive = True
+            positive = False
         else:
             raise ValueError("Invalid level value")
 
