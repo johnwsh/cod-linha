@@ -135,4 +135,4 @@ def start_server(host='localhost', port=65432):
     plot_levels_tk(root, ax, canvas, app_widgets)
     root.mainloop()
 
-start_server(host='localhost', port=65432)
+start_server(host='26.14.40.24', port=65432)
