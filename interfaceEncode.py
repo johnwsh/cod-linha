@@ -21,7 +21,7 @@ class App:
         self.message_entry.insert(0, "Hello, World!")
 
         tk.Label(input_frame, text="Senha:").grid(row=1, column=0, sticky=W, pady=2)
-        self.password_entry = Entry(input_frame, show="*", width=80)
+        self.password_entry = Entry(input_frame, width=80)
         self.password_entry.grid(row=1, column=1, sticky=(W, E))
         self.password_entry.insert(0, "my_secret_password")
 
@@ -89,8 +89,6 @@ class App:
         self.ax.set_title("Sinal Codificado em 2B1Q")
         self.ax.set_ylabel("Nível de Tensão")
         
-        # ### LINHA MODIFICADA ###
-        # Remove as marcações (e os números) do eixo x
         self.ax.set_xticks([])
         
         y_ticks = sorted(list(set(levels)))
@@ -101,7 +99,7 @@ class App:
         self.fig.tight_layout()
         self.canvas.draw()
 
-if __name__ == "__main__":
+def mainEncode():
     root = tk.Tk()
     def on_closing():
         root.destroy()
@@ -109,3 +107,4 @@ if __name__ == "__main__":
     root.protocol("WM_DELETE_WINDOW", on_closing)
     app = App(root)
     root.mainloop()
+

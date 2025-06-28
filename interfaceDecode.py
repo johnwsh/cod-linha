@@ -2,8 +2,11 @@ import tkinter as tk
 from tkinter import scrolledtext, LabelFrame, Entry, Button, Frame, LEFT, RIGHT, X, Y, BOTH, TOP, SUNKEN, W, E, N, S, messagebox
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from criptAndBinary import encryptMessage, binarize
-from twoboneq import lineEncode
+from criptAndBinary import decryptMessage, debinarize
+from twoboneq import lineDecode
+import sys
+import ast
+from cryptography.fernet import InvalidToken
 
 class DecoderApp:
     def __init__(self, root):
@@ -20,7 +23,7 @@ class DecoderApp:
         self.levels_entry.grid(row=0, column=1, sticky=(W, E))
 
         tk.Label(input_frame, text="Senha:").grid(row=1, column=0, sticky=W, pady=2)
-        self.password_entry = Entry(input_frame, show="*", width=80)
+        self.password_entry = Entry(input_frame, width=80)
         self.password_entry.grid(row=1, column=1, sticky=(W, E))
         
         # --- Botão ---
@@ -121,7 +124,11 @@ class DecoderApp:
         self.fig.tight_layout()
         self.canvas.draw()
 
-if __name__ == "__main__":
+def mainDecode():    
     root = tk.Tk()
+    def on_closing():
+        root.destroy()
+        sys.exit()
+    root.protocol("WM_DELETE_WINDOW", on_closing)
     app = DecoderApp(root)
     root.mainloop()
