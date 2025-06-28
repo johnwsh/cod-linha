@@ -8,7 +8,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from criptAndBinary import encryptMessage, binarize
+from criptAndBinary import encryptMessageFromStr, binarize
 from twoboneq import lineEncode
 from criptAndBinary import decryptMessage, debinarize
 from twoboneq import lineDecode
@@ -71,10 +71,8 @@ class ClientApp:
         if not message_str or not password_str:
             messagebox.showerror("Erro", "Mensagem e senha não podem estar vazias.")
             return
-
-        message_bytes = message_str.encode('utf-8')
-        password_bytes = password_str.encode('utf-8')
-        encrypted_message = encryptMessage(message_bytes, password_bytes)
+        
+        encrypted_message = encryptMessageFromStr(message_str, password_str)
         self.encrypted_text.delete(1.0, tk.END)
         self.encrypted_text.insert(tk.END, str(encrypted_message))
         binarized_message = binarize(encrypted_message)

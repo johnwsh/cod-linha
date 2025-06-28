@@ -47,3 +47,10 @@ def debinarize(data: str):
     bytes_list = [data[i:i + 8] for i in range(0, len(data), 8)]
     return bytes(int(byte, 2) for byte in bytes_list)
 
+def encryptMessageFromStr(message: str, password: str):
+    return encryptMessage(message.encode('utf-8'), password.encode('utf-8'))
+
+def decryptMessageToStr(token: bytes, password: str):
+    decrypted = decryptMessage(token, password.encode('utf-8'))
+    return decrypted.decode('utf-8')
+
