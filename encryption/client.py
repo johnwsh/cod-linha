@@ -12,7 +12,7 @@ from criptAndBinary import encryptMessage, binarize
 from twoboneq import lineEncode
 from criptAndBinary import decryptMessage, debinarize
 from twoboneq import lineDecode
-import server
+import sys
 
 class ClientApp:
     def __init__(self, root):
@@ -29,7 +29,7 @@ class ClientApp:
         self.message_entry.grid(row=0, column=1, sticky=(W, E))
         self.message_entry.insert(0, "Hello, World!")
         tk.Label(input_frame, text="Senha:").grid(row=1, column=0, sticky=W, pady=2)
-        self.password_entry = Entry(input_frame, show="*", width=80)
+        self.password_entry = Entry(input_frame, width=80)
         self.password_entry.grid(row=1, column=1, sticky=(W, E))
         self.password_entry.insert(0, "my_secret_password")
 
@@ -44,6 +44,15 @@ class ClientApp:
         # --- Frame de Saídas ---
         output_frame = LabelFrame(root, text="Resultados Locais", padx=10, pady=10)
         output_frame.pack(padx=10, pady=10, fill=BOTH, expand=True)
+
+        tk.Label(output_frame, text="Mensagem Criptografada (Bytes):").pack(anchor=W)
+        self.encrypted_text = scrolledtext.ScrolledText(output_frame, height=4, wrap=tk.WORD)
+        self.encrypted_text.pack(fill=X, pady=5)
+
+        tk.Label(output_frame, text="Mensagem em Binário:").pack(anchor=W)
+        self.binary_text = scrolledtext.ScrolledText(output_frame, height=6, wrap=tk.WORD)
+        self.binary_text.pack(fill=X, pady=5)
+
         tk.Label(output_frame, text="Lista de Níveis (2B1Q) Gerada:").pack(anchor=W)
         self.levels_text = scrolledtext.ScrolledText(output_frame, height=4, wrap=tk.WORD)
         self.levels_text.pack(fill=X, pady=5)
@@ -66,7 +75,11 @@ class ClientApp:
         message_bytes = message_str.encode('utf-8')
         password_bytes = password_str.encode('utf-8')
         encrypted_message = encryptMessage(message_bytes, password_bytes)
+        self.encrypted_text.delete(1.0, tk.END)
+        self.encrypted_text.insert(tk.END, str(encrypted_message))
         binarized_message = binarize(encrypted_message)
+        self.binary_text.delete(1.0, tk.END)
+        self.binary_text.insert(tk.END, binarized_message)
         self.encoded_levels = lineEncode(binarized_message)
         
         self.levels_text.delete(1.0, tk.END)
@@ -93,7 +106,6 @@ class ClientApp:
         # Empacota os dados em um dicionário para enviar como JSON
         payload = {
             "levels": self.encoded_levels,
-            "password": self.password_entry.get()
         }
         
         # Converte o dicionário para uma string JSON e depois para bytes
@@ -113,5 +125,9 @@ class ClientApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
+    def on_closing():
+        root.destroy()
+        sys.exit()
+    root.protocol("WM_DELETE_WINDOW", on_closing)
     app = ClientApp(root)
     root.mainloop()
